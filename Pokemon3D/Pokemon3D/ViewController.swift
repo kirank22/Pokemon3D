@@ -22,17 +22,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
+        sceneView.autoenablesDefaultLighting = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARImageTrackingConfiguration()
+        let configuration = ARWorldTrackingConfiguration()
         
         if let imageToTrack = ARReferenceImage.referenceImages(inGroupNamed: "Pokemon Cards", bundle: Bundle.main) {
-            configuration.trackingImages = imageToTrack
-            configuration.maximumNumberOfTrackedImages = 1
+            configuration.detectionImages = imageToTrack
+            configuration.maximumNumberOfTrackedImages = 2
             
             print("Images Successfully Added")
         }
@@ -54,6 +55,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let node = SCNNode()
         
         if let imageAnchor = anchor as? ARImageAnchor {
+            
+            
             // Same dimensions as ref image
             let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width, height: imageAnchor.referenceImage.physicalSize.height)
             
@@ -65,6 +68,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planeNode.eulerAngles.x = -.pi / 2
             
             node.addChildNode(planeNode)
+            
+            // Eevee
+            if imageAnchor.referenceImage.name == "eevee-card" {
+                if let pokeScene = SCNScene(named: "art.scnassets/eevee.scn") {
+                    if let pokeNode = pokeScene.rootNode.childNodes.first {
+                        // Rotate clockwise to stand on top
+                        pokeNode.eulerAngles.x = .pi / 2
+                        planeNode.addChildNode(pokeNode)
+                    }
+                }
+            }
+            
+            // Oddish
+            if imageAnchor.referenceImage.name == "oddish-card" {
+                if let pokeScene = SCNScene(named: "art.scnassets/oddish.scn") {
+                    if let pokeNode = pokeScene.rootNode.childNodes.first {
+                        // Rotate clockwise to stand on top
+                        pokeNode.eulerAngles.x = .pi / 2
+                        planeNode.addChildNode(pokeNode)
+                    }
+                }
+            }
         }
         
         return node
