@@ -70,7 +70,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             node.addChildNode(planeNode)
             
             // Eevee
-            if imageAnchor.referenceImage.name == "eevee-card" {
+            if imageAnchor.referenceImage.name == "fake-eevee" {
                 if let pokeScene = SCNScene(named: "art.scnassets/eevee.scn") {
                     if let pokeNode = pokeScene.rootNode.childNodes.first {
                         // Rotate clockwise to stand on top
@@ -81,7 +81,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
             
             // Oddish
-            if imageAnchor.referenceImage.name == "oddish-card" {
+            if imageAnchor.referenceImage.name == "fake-oddish " {
                 if let pokeScene = SCNScene(named: "art.scnassets/oddish.scn") {
                     if let pokeNode = pokeScene.rootNode.childNodes.first {
                         // Rotate clockwise to stand on top
